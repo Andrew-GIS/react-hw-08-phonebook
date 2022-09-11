@@ -1,57 +1,78 @@
-import { PhoneSection } from './PhoneForm/PhoneForm';
-import { ContactForm } from './Contacts/ContactSection';
-import { FilterSection } from './Filter/Filter';
-import { nanoid } from "nanoid";
+import { Routes, Route } from 'react-router-dom';
+import { useEffect, lazy } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeFiler } from '../redux/filterSlice';
-import { useGetContactsQuery, useAddContactMutation, useDeleteContactMutation } from 'redux/contactApi';
-import { Spiner } from '../components/Spiner/Spiner';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { refreshUser } from '../redux/auth/auth-operation';
+import { SharedLayout } from './SharedLayout/SharedLayout';
+import { PublicRoute } from './PublicRoute/PublicRoute';
+import { PrivatRoute } from './PrivateRoute/PrivateRoute';
+
+const RegisterPage = lazy(() => import('../views/RegisterView/RegisterView'));
+const LoginPage = lazy(() => import('../views/LoginView/LoginView'));
+const PhoneBookPage = lazy(() => import('../views/PhoneBookPage'));
+const NotFoundPage = lazy(() => import('../views/NotFoundPage/NotFoundPage'));
 
 export function App() {
-  const { data: contacts, error, isLoading} = useGetContactsQuery();
-  const [addContact] = useAddContactMutation();
-
+  const isRefreshing = useSelector(state => state.auth.refreshLoading);
   const dispatch = useDispatch();
-  const filterState = useSelector(state => state.filter);
-  
-  const onFormSubmit = ({ name, number }) => {
-      const isNameOnList = contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase());
-    if (isNameOnList) {
-        toast.warn(`${name} is already in contacts.`, {autoClose: 1000})
-        return;
-      }
-        addContact({id: nanoid(), name, number})
-     };
-  
-  const [deleteContact, { isLoading: isDeleting } ] = useDeleteContactMutation();
 
-  const onChangeFilter = event => {
-    dispatch(changeFiler(event.target.value));
-  }
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
 
-  const getFilteredContact = () => {
-    const newContacts = contacts.filter(contact =>
-      contact.name.toString().toLowerCase().includes(filterState.toLowerCase()));
-    return newContacts;
-  }
-
-    return (
-      <>
-        <h1 className='primaryTitle'>Phonebook</h1>
-        <PhoneSection onSubmit={onFormSubmit} />
-        <FilterSection title={"Find contacts by name"} value={filterState} onChange={onChangeFilter}/>
-        <h2 className='secondaryTitle'>Contacts</h2>
-        {error && <>
-          {toast.error(`Somethig went wrong, please reload the page`, { autoClose: 1000 })}
-        </>}
-        {isLoading || isDeleting
-          ? <Spiner />
-          : (contacts === undefined)||((contacts.length === 0))
-            ? (<h3 className='warningText'>No Contects in your PhoneBook</h3>)
-            : (<ContactForm contacts={getFilteredContact()} onDeleteContact={deleteContact} />)}
-        <ToastContainer />
-      </>
+  return (
+      !isRefreshing &&
+      (<>
+      <Routes>
+        <Route path='/' element={<SharedLayout />}>
+          <Route
+              path="login"
+              element={
+                <PublicRoute>
+                  <LoginPage />
+                </PublicRoute>
+              } />
+          <Route
+              path="register"
+              element={
+                <PublicRoute>
+                  <RegisterPage />
+                </PublicRoute>
+              }
+          />
+          <Route
+              path="contacts"
+              element={
+                <PrivatRoute>
+                  <PhoneBookPage />
+                </PrivatRoute>
+              }
+          />
+            <Route path="*" element={<NotFoundPage/>} />
+        </Route>
+      </Routes>
+      </>)
     );
 }
+
+
+{/* <Route path='/'></Route>
+           <Route
+              path="register"
+              element={
+                <RegisterPage/>
+              }
+          />
+          <Route
+            path="login"
+            element={
+                <LoginPage />
+              }
+          />
+          <Route
+            path="contacts"
+            element={
+                <PhoneBookPage />
+              }
+          />
+          <Route path="*" element={<NotFoundPage/>} /> */}

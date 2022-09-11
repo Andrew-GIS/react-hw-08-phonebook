@@ -1,15 +1,17 @@
 import {PhoneForm, NameLable, PhoneInput, AddButton } from './PhoneForm.styled';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from "nanoid";
+import { toast } from 'react-toastify';
 
 export function PhoneSection({ onSubmit }) {
-
 	const [name, setName] = useState('');
 	const [number, setNumber] = useState('');
 
 	const inputId = nanoid();
-	
-	const handleInputChange = (event) => {
+	// const dispatch = useDispatch();
+
+	const onInputChange = (event) => {
 		const { name, value } = event.target;
 		if (name === "name") {
 			setName(value);
@@ -20,7 +22,7 @@ export function PhoneSection({ onSubmit }) {
 			return;
 		}
 		else {
-			alert("An Error in your Application");
+			toast.error(`Error with ${name}, please try again`);
 			return;
 		}
 	}
@@ -49,7 +51,7 @@ export function PhoneSection({ onSubmit }) {
 							required
 							id={inputId}
 							value={name}
-							onChange={handleInputChange}>
+							onChange={onInputChange}>
 						</PhoneInput>
 					</NameLable>
 					<NameLable htmlFor={number} >
@@ -62,12 +64,11 @@ export function PhoneSection({ onSubmit }) {
 							required
 							id={inputId}
 							value={number}
-							onChange={handleInputChange}>
+							onChange={onInputChange}>
 						</PhoneInput>
 					</NameLable>
 				<AddButton type='submit'>Add Contact</AddButton>
 			</PhoneForm>
 			)
 		)
-	
 }

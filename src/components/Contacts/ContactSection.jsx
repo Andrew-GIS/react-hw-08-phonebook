@@ -1,10 +1,20 @@
 import { Contacts, Header} from "./ContactSection.styled";
 import { ContactItem } from './ContactItem';
 import propTypes from 'prop-types';
+import { getContacts } from '../../redux/contacts/contactOperation';
+ 
 
-
-export const ContactForm = ({ contacts, onDeleteContact }) => {
+export const ContactForm = ({ contacts, onDeleteContact } ) => {
+	// const contacts = useSelector(state => state.contacts.contacts);
+  	// const filter = useSelector(state => state.contacts.filter);
+	// const dispatch = useDispatch();
 	
+	// useEffect(() => {
+    // dispatch(getContacts());
+	// }, [dispatch]);
+	
+
+
 		return (
 			<Contacts>
 				<Header>

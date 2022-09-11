@@ -1,0 +1,20 @@
+.wrapper{
+	min-width: 100vw;
+	min-height: 100vh;
+	background: rgb(247, 246, 246);
+}
+
+.conteiner{
+	width: 1200px;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0px 40px 40px 40px;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	min-height: 77px;
+}
