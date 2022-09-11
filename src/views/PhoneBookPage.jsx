@@ -39,8 +39,6 @@ export default function PhoneBookPage() {
       }
      };
   
-  //const [deleteContact, { isLoading: isDeleting } ] = useDeleteContactMutation();
-  
   const deleteContact = id => {
     console.log('removeContactbject :>> ');
     dispatch(removeContact(id));
@@ -51,10 +49,6 @@ export default function PhoneBookPage() {
   }
 
   const getFilteredContact = () => {
-    // contacts.filter(({name}))
-    // return contacts;
-    // dispatch(getContacts());
-    // console.log('contacts :>> ', contacts);
     const newContacts = contacts.filter(({ name }) =>
     name.toLowerCase().includes(filter.toLowerCase()));
     return newContacts;
