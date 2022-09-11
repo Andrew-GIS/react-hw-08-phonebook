@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import { useEffect, useRef, Suspense } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, Suspense } from 'react';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { UserMenu } from '../UserMenu/UserMenu';
 import css from './SharedLayout.module.css';
@@ -8,7 +8,7 @@ import css from './SharedLayout.module.css';
 export const SharedLayout = () => {
 	const isError = useSelector(state => state.auth.error);
 	const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 
 	useEffect(() => {
 		if (isError) {

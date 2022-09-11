@@ -54,25 +54,3 @@ export function App() {
       </>)
     );
 }
-
-
-{/* <Route path='/'></Route>
-           <Route
-              path="register"
-              element={
-                <RegisterPage/>
-              }
-          />
-          <Route
-            path="login"
-            element={
-                <LoginPage />
-              }
-          />
-          <Route
-            path="contacts"
-            element={
-                <PhoneBookPage />
-              }
-          />
-          <Route path="*" element={<NotFoundPage/>} /> */}

@@ -27,6 +27,12 @@ justify-content: center;
 align-items: center;
 `;
 
+export const Lable = styled.label`
+display: flex;
+flex-direction: column;
+margin-bottom: 15px;
+`;
+
 export const NavigateBtn = styled(NavLink)`
 position: absolute;
 top: 10px;

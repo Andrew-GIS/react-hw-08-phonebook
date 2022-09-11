@@ -2,18 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { userLogin } from '../../redux/auth/auth-operation';
-import { LoginForm, MainTitle, SecondaryTitle, NavigateBtn } from 'views/LoginView/LoginView.styled';
-
-const styles = {
-  form: {
-    width: 320,
-  },
-  label: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: 15,
-  },
-};
+import { LoginForm, MainTitle, SecondaryTitle, NavigateBtn, Lable } from 'views/LoginView/LoginView.styled';
 
 export default function LoginView() {
 	const dispatch = useDispatch();
@@ -48,22 +37,22 @@ export default function LoginView() {
 			<MainTitle>Login</MainTitle>
 			<SecondaryTitle>Please, inpute your data to continue</SecondaryTitle>
 			<LoginForm onSubmit={handleSubmit} autoComplete="off">
-				<lable style={styles.label}>Email
+				<Lable>Email
 					<input
 						type="email"
 						name="email"
 						value={email}
 						onChange={handleChange}>
 					</input>
-				</lable>
-				<lable style={styles.label}>Password
+				</Lable>
+				<Lable>Password
 					<input
 						type="password"
 						name="password"
 						value={password}
 						onChange={handleChange}>
 					</input>
-				</lable>
+				</Lable>
 				<button type='submit'>Submit</button>
 			</LoginForm>
 			<NavigateBtn to='/register'>Registration</NavigateBtn>
