@@ -1,61 +1,62 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  getContacts,
-  createContact,
-  removeContact,
-  changeContact,
-} from './contactOperation.js';
+  addContactError,
+  addContactRequest,
+  addContactSuccess,
+} from '../contacts/contactAction';
+import { getContact, deleteContact } from '../contacts/contactOperation';
 
-const initialState = {
-  contacts: [],
-  filter: '',
-  createContactLoading: false,
-  removeContactLoading: false,
-};
-
-export const contactsSlice = createSlice({
+export const contactSlice = createSlice({
   name: 'contacts',
-  initialState,
+  initialState: {
+    items: [],
+    filter: '',
+    isLoading: false,
+    error: null,
+  },
   reducers: {
-    changeFilter: (state, action) => {
+    changeFilter(state, action) {
       state.filter = action.payload;
     },
   },
   extraReducers: {
-    [getContacts.fulfilled](state, action) {
-      state.contacts = action.payload;
+    [addContactRequest]: (state, action) => {
+      state.isLoading = true;
     },
-    [createContact.fulfilled](state, action) {
-      state.contacts = [...state.contacts, action.payload];
-      state.createContactLoading = false;
+    [addContactSuccess]: (state, { payload }) => {
+      state.isLoading = false;
+      state.items = [...state.items, payload];
     },
-    [createContact.rejected](state) {
-      state.createContactLoading = false;
+    [addContactError]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
     },
-    [createContact.pending](state) {
-      state.createContactLoading = true;
+    [getContact.pending]: state => {
+      state.isLoading = true;
     },
-    [removeContact.fulfilled](state, action) {
-      state.contacts = state.contacts.filter(({ id }) => id !== action.payload);
-      state.removeContactLoading = false;
+    [getContact.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.items = payload;
     },
-    [removeContact.rejected](state) {
-      state.removeContactLoading = false;
+    [getContact.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
     },
-    [removeContact.pending](state) {
-      state.removeContactLoading = true;
+    [deleteContact.pending]: state => {
+      state.isLoading = true;
     },
-    [changeContact.fulfilled](state, action) {
-      state.contacts = state.contacts.map(contact => {
-        return contact.id !== action.payload.id
-          ? contact
-          : { ...contact, ...action.payload };
-      });
+    [deleteContact.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.items = state.items.filter(contact => contact.id !== payload);
+    },
+    [deleteContact.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
     },
   },
 });
 
-export const { changeFilter } = contactsSlice.actions;
+export const { changeFilter } = contactSlice.actions;
 
     // { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
     // {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},

@@ -1,56 +1,99 @@
-import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  addContactRequest,
+  addContactSuccess,
+  addContactError,
+} from '../contacts/contactAction';
+import {
+  addContactApi,
+  getContactApi,
+  deleteContactApi,
+} from '../utils/SwaggerApi';
 
-export const createContact = createAsyncThunk(
-  'contacts/createContact',
-  async contact => {
+export const addContact = contact => (dispatch, _) => {
+  dispatch(addContactRequest());
+  addContactApi(contact)
+    .then(newContact => dispatch(addContactSuccess(newContact)))
+    .catch(err => dispatch(addContactError(err.message)));
+};
+
+export const getContact = createAsyncThunk(
+  'contact/get',
+  async (_, thunkApi) => {
     try {
-      const { data } = await axios.post('/contacts', contact);
-      return data;
-    } catch (error) {
-      console.log(error);
+      const contact = await getContactApi();
+      return contact;
+    } catch (err) {
+      return thunkApi.rejectWithValue(err.message);
     }
   }
 );
 
-export const getContacts = createAsyncThunk(
-  'contacts/getContacts',
-  async () => {
+export const deleteContact = createAsyncThunk(
+  'contact/delete',
+  async (contactId, thunkApi) => {
     try {
-      const { data } = await axios('/contacts');
-      return data;
-    } catch (error) {
-      console.log(error);
+      await deleteContactApi(contactId);
+      return contactId;
+    } catch (err) {
+      return thunkApi.rejectWithValue(err.message);
     }
   }
 );
 
-export const removeContact = createAsyncThunk(
-  'contacts/removeContact',
-  async id => {
-    try {
-      await axios.delete(`/contacts/${id}`);
-      return id;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
+// import axios from 'axios';
+// import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const changeContact = createAsyncThunk(
-  'contacts/changeContact',
-  async ({ id, name, number }) => {
-    try {
-      const { data } = await axios.patch(`/contacts/${id}`, {
-        name,
-        number,
-      });
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
+// export const createContact = createAsyncThunk(
+//   'contacts/createContact',
+//   async contact => {
+//     try {
+//       const { data } = await axios.post('/contacts', contact);
+//       return data;
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+// );
+
+// export const getContacts = createAsyncThunk(
+//   'contacts/getContacts',
+//   async () => {
+//     try {
+//       const { data } = await axios('/contacts');
+//       return data;
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+// );
+
+// export const removeContact = createAsyncThunk(
+//   'contacts/removeContact',
+//   async id => {
+//     try {
+//       await axios.delete(`/contacts/${id}`);
+//       return id;
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+// );
+
+// export const changeContact = createAsyncThunk(
+//   'contacts/changeContact',
+//   async ({ id, name, number }) => {
+//     try {
+//       const { data } = await axios.patch(`/contacts/${id}`, {
+//         name,
+//         number,
+//       });
+//       return data;
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+// );
 
 
 // import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'

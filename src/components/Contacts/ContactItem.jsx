@@ -1,6 +1,11 @@
 import { Contact, DeleteButton } from "./ContactSection.styled";
 import { removeContact } from '../../redux/contacts/contactOperation';
 import { useDispatch } from 'react-redux';
+import {
+  addContact,
+  getContact,
+  deleteContact,
+} from '../../redux/contacts/contactOperation';
 //import { useDeleteContactMutation } from '../../redux/contactApi';
 
 export const ContactItem = ({ id, name, number }) => {
@@ -10,7 +15,7 @@ export const ContactItem = ({ id, name, number }) => {
 		<Contact>
 			<p>{name}</p>
 			<p>{number}</p>
-			<DeleteButton type="button" id={id} onClick={() => dispatch(removeContact(id))}>Delete</DeleteButton>
+			<DeleteButton type="button" id={id} onClick={() => dispatch(deleteContact(id))}>Delete</DeleteButton>
 		</Contact>
 	);
 }

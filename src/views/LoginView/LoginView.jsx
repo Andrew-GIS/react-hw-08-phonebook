@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { userLogin } from '../../redux/auth/auth-operation';
+// import { userLogin } from '../../redux/auth/auth-operation';
+import authOperations from '../../redux/auth/auth-operation';
 import { LoginForm, MainTitle, SecondaryTitle, NavigateBtn, Lable } from 'views/LoginView/LoginView.styled';
 
 export default function LoginView() {
@@ -23,8 +24,10 @@ export default function LoginView() {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		dispatch(userLogin({ email, password }));
-		reset();
+		dispatch(authOperations.logIn({ email, password }));
+		setEmail('');
+    	setPassword('');
+		// reset();
 	}
 
 	const reset = () => {
@@ -55,7 +58,7 @@ export default function LoginView() {
 				</Lable>
 				<button type='submit'>Submit</button>
 			</LoginForm>
-			<NavigateBtn to='/register'>Registration</NavigateBtn>
+			{/* <NavigateBtn to='/register'>Registration</NavigateBtn> */}
 		</div>
 	);
 }

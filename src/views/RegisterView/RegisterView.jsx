@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { userRegistration } from '../../redux/auth/auth-operation';
+import authOperations from '../../redux/auth/auth-operation';
 import { RegisterForm, MainTitle, SecondaryTitle , NavigateBtn, Lable} from './RegisterView.styled';
 
 export default function RegisterPage() {
@@ -26,8 +26,11 @@ export default function RegisterPage() {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		dispatch(userRegistration({ name, email, password }));
-		reset();
+		dispatch(authOperations.register({ name, email, password }));
+		setName('');
+    	setEmail('');
+    	setPassword('');
+		// reset();
 	}
 
 	const reset = () => {
@@ -40,8 +43,8 @@ export default function RegisterPage() {
 		<div>
 			<MainTitle>Registration</MainTitle>
 			<SecondaryTitle>Please, inpute your data to sign up</SecondaryTitle>
-      <RegisterForm onSubmit={handleSubmit} autoComplete="off">
-        <Lable>Name
+				<RegisterForm onSubmit={handleSubmit} autoComplete="off">
+				<Lable>Name
 					<input
 						type="text"
 						name="name"
@@ -67,7 +70,7 @@ export default function RegisterPage() {
 				</Lable>
 				<button type='submit'>REGISTER ME</button>
 			</RegisterForm>
-			<NavigateBtn to='/login'>To Login</NavigateBtn>
+			{/* <NavigateBtn to='/login'>To Login</NavigateBtn> */}
 		</div>
 	);
 }
