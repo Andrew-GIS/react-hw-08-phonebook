@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 // import { userLogin } from '../../redux/auth/auth-operation';
 import authOperations from '../../redux/auth/auth-operation';
-import { LoginForm, MainTitle, SecondaryTitle, NavigateBtn, Lable } from 'views/LoginView/LoginView.styled';
+import { LoginForm, MainTitle, SecondaryTitle, Lable } from 'views/LoginView/LoginView.styled';
 
 export default function LoginView() {
 	const dispatch = useDispatch();
@@ -30,10 +30,10 @@ export default function LoginView() {
 		// reset();
 	}
 
-	const reset = () => {
-		setEmail('');
-		setPassword('');
-	}
+	// const reset = () => {
+	// 	setEmail('');
+	// 	setPassword('');
+	// }
 	
 	return (
 		<div>

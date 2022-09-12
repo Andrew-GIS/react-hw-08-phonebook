@@ -1,5 +1,5 @@
 import React from "react";
-import {Container, MainTitle, NavigateContainer, NavigateBtn } from './AboutPage.styled';
+import {Container, MainTitle } from './AboutPage.styled';
 
 export default function NotFoundPage() {
 	return (

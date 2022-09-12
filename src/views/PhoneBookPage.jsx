@@ -1,18 +1,15 @@
 import { PhoneSection } from '../components/PhoneForm/PhoneForm';
 import { ContactForm } from  '../components/Contacts/ContactSection';
 import { FilterSection } from '../components/Filter/Filter';
-import { nanoid } from "nanoid";
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Spiner } from '../components/Spiner/Spiner';
 import { ToastContainer, toast } from 'react-toastify';
-import { createContact, getContacts } from '../redux/contacts/contactOperation';
 import { changeFilter } from '../redux/contacts/contactSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import {
   addContact,
   getContact,
-  deleteContact,
 } from '../redux/contacts/contactOperation';
 
 export default function PhoneBookPage() {

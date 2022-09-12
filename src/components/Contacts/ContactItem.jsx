@@ -1,9 +1,6 @@
 import { Contact, DeleteButton } from "./ContactSection.styled";
-import { removeContact } from '../../redux/contacts/contactOperation';
 import { useDispatch } from 'react-redux';
 import {
-  addContact,
-  getContact,
   deleteContact,
 } from '../../redux/contacts/contactOperation';
 //import { useDeleteContactMutation } from '../../redux/contactApi';

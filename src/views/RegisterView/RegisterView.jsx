@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import authOperations from '../../redux/auth/auth-operation';
-import { RegisterForm, MainTitle, SecondaryTitle , NavigateBtn, Lable} from './RegisterView.styled';
+import { RegisterForm, MainTitle, SecondaryTitle , Lable} from './RegisterView.styled';
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
@@ -33,11 +33,11 @@ export default function RegisterPage() {
 		// reset();
 	}
 
-	const reset = () => {
-		setName('');
-    	setEmail('');
-    	setPassword('');
-	}
+	// const reset = () => {
+	// 	setName('');
+    // 	setEmail('');
+    // 	setPassword('');
+	// }
 	
 	return (
 		<div>
