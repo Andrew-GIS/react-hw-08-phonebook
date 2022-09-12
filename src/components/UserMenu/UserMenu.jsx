@@ -5,7 +5,7 @@ import css from './UserMenu.module.css';
 export const UserMenu = () => {
   const dispatch = useDispatch();
   const userName = useSelector(state => state.auth.user.name);
-
+  console.log('userName :>> ', userName);
   return (
     <div className={css.userWrap}>
       <p className={css.authTitle}>
